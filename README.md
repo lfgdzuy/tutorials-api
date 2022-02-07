@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# Tutorials REST API built on top of Node.js/Express, TypeORM and MySQL
 
 Steps to run this project:
 
