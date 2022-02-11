@@ -9,7 +9,7 @@ export class Tutorial {
     @Column({type: 'varchar'})
     title: string;
 
-    @Column({type: 'varchar'})
+    @Column({type: 'varchar', nullable: true})
     video_url: string;
 
     @Column({type: 'varchar'})
@@ -18,7 +18,7 @@ export class Tutorial {
     @Column()
     published: boolean;
 
-    @Column({ type: 'date' })
+    @Column({ type: 'date', nullable: true })
     deleted_at: Date;
 
 }
