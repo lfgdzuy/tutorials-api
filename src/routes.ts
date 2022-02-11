@@ -52,6 +52,12 @@ export const Routes = [
     },
     {
         method: "delete",
+        route: "/tutorials/mass_delete",
+        controller: TutorialController,
+        action: "removeAll"
+    },
+    {
+        method: "delete",
         route: "/tutorials/:id",
         controller: TutorialController,
         action: "remove"
