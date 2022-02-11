@@ -1,6 +1,7 @@
-import { getRepository, Like } from "typeorm";
+import { getRepository, Like, IsNull } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Tutorial } from "../entity/Tutorial";
+import { format } from 'date-fns'
 
 export class TutorialController {
 
@@ -16,11 +17,16 @@ export class TutorialController {
                     },
                     {
                         description: Like(`%${searchQuery}%`)
+                    },
+                    {
+                        deleted_at: IsNull()
                     }
                 ]
             });
         else
-            return this.tutorialRepository.find();
+            return this.tutorialRepository.find({
+                where: [{ deleted_at: IsNull() }]
+            });
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
@@ -57,8 +63,8 @@ export class TutorialController {
     }
 
     async removeAll(request: Request, response: Response, next: NextFunction) {
-        const deleted_at = new Date();
-        return this.tutorialRepository.query(`UPDATE tutorial SET deleted_at = ${deleted_at}`);
+        const deleted_at = format(new Date(), "yyyy-MM-dd");
+        return this.tutorialRepository.query(`UPDATE tutorial SET deleted_at = '${deleted_at}'`);
     }
 
 }
