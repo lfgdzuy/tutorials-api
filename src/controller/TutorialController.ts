@@ -31,6 +31,21 @@ export class TutorialController {
         return this.tutorialRepository.save(request.body);
     }
 
+
+    async update(request: Request, response: Response, next: NextFunction) {
+        const tutorialEntity = new Tutorial();
+      
+        tutorialEntity.title = request.body.title;
+        tutorialEntity.description = request.body.description;
+        tutorialEntity.video_url = request.body.video_url;
+        tutorialEntity.published = request.body.published;
+
+        return this.tutorialRepository.update(
+            request.params.id ,
+            tutorialEntity,
+        );
+    }
+
     async remove(request: Request, response: Response, next: NextFunction) {
         let tutorialToRemove = await this.tutorialRepository.findOne(request.params.id);
         await this.tutorialRepository.remove(tutorialToRemove);
