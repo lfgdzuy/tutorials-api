@@ -48,7 +48,17 @@ export class TutorialController {
 
     async remove(request: Request, response: Response, next: NextFunction) {
         let tutorialToRemove = await this.tutorialRepository.findOne(request.params.id);
-        await this.tutorialRepository.remove(tutorialToRemove);
+        tutorialToRemove.deleted_at = new Date();
+
+        return this.tutorialRepository.update(
+            request.params.id ,
+            tutorialToRemove,
+        );
+    }
+
+    async removeAll(request: Request, response: Response, next: NextFunction) {
+        const deleted_at = new Date();
+        return this.tutorialRepository.query(`UPDATE tutorial SET deleted_at = ${deleted_at}`);
     }
 
 }
